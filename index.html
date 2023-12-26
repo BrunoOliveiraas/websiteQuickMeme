@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickMeme</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Estilos adicionais para a galeria */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilos para o cabeçalho */
+        header {
+            background-color: #3498db; /* Azul */
+            color: #ffffff; /* Branco */
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 20px 20px; /* Borda inferior com cantos arredondados */
+        }
+
+        /* Estilo para o texto "Abc Memes/Gifs" em negrito e como botão */
+        h1 {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Adiciona efeitos de hover aos botões MEMES e GIFS */
+        .gallery-btn {
+            background-color: #5DADE2; /* Azul claro */
+            color: #ffffff; /* Branco */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .gallery-btn:hover {
+            background-color: #4A90E2; /* Azul ligeiramente mais escuro ao passar o mouse */
+        }
+
+        .gallery-btn:active {
+            background-color: #2162A2; /* Azul escuro durante o clique */
+        }
+
+        /* Estilo para o texto escuro na barra de pesquisa */
+        #searchInput {
+            color: #000000; /* Cor preta para garantir visibilidade */
+        }
+
+        /* Estilos para o modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .modal-caption {
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* Estilo para o botão de voltar ao topo */
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db; /* Azul */
+            color: #ffffff; /* Branco */
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #backToTop:hover {
+            background-color: #4A90E2; /* Azul ligeiramente mais escuro ao passar o mouse */
+        }
+
+        #backToTop:active {
+            background-color: #2162A2; /* Azul escuro durante o clique */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #3498db; /* Cor de fundo escura para o rodapé */
+            color: #ffffff; /* Texto branco no rodapé */
+            padding: 1rem;
+            text-align: center;
+            margin-top: 750px; /* Margem superior de 300 pixels */
+            border-radius: 20px; /* Cantos redondos */
+        }
+
+        @media screen and (max-width: 640px) {
+            /* Estilo para telas menores que 640 pixels de largura */
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            }
+
+            header {
+                flex-direction: column; /* Coloca os itens um abaixo do outro */
+                align-items: stretch; /* Estica os itens verticalmente */
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-gray-200 p-8">
+    <div class="container mx-auto">
+        <header class="w-full">
+            <h1 class="text-3xl font-bold" id="titleBtn">QuickMeme</h1>
+            <div class="flex items-center space-x-4">
+                <button class="gallery-btn px-4 py-2 rounded" id="memesBtn">MEMES</button>
+                <button class="gallery-btn px-4 py-2 rounded" id="gifsBtn">GIFS</button>
+                <div class="search-bar">
+                    <input type="text" placeholder="Pesquisar por título" class="w-full p-2 rounded border border-gray-300" id="searchInput">
+                </div>
+            </div>
+        </header>
+
+        <br>
+
+        <div class="gallery" id="imageGallery">
+            <!-- Adicione suas imagens aqui -->
+            
+            <img src="https://media1.tenor.com/m/vbD-reOsKf4AAAAC/spongebob-patrick.gif" alt="Spongebob Patrick gif" data-caption="Spongebob Patrick">
+            <img src="https://preview.redd.it/n2qv7w5miw4c1.jpg?width=640&crop=smart&auto=webp&s=ac93352c9e0509884f6a76e809bab3f2faff5eaa" alt="gta6  meme" data-caption="Gotta start saving up from now">
+            <img src="https://media1.tenor.com/m/axWwWPQpyGcAAAAd/bee.gif" alt="Mike Tyson dance dancing bee  gif" data-caption="Mike Tyson dance">
+            <img src="https://preview.redd.it/cv7e1536a36c1.png?auto=webp&s=44db02a7f1b73d1f2e68af2bd4cdf6c1cad26b49" alt="me for real meme" data-caption="me for real">
+            <img src="https://media1.tenor.com/m/oU5NLpoWR4EAAAAd/jonah-hill-annoyed.gif" alt="Jonah Hill Annoyed gif" data-caption="Jonah Hill Annoyed">
+            <img src="https://media1.tenor.com/m/p1aqUTPYx3UAAAAd/byuntear-sad.gif" alt="Bruh cat gif" data-caption="Bruh">
+            <img src="https://media1.tenor.com/m/cDSsZhkzbksAAAAd/wink-clin-doeil.gif" alt="Wink Clin Doeil gif" data-caption="Wink Clin Doeil">
+            <img src="https://preview.redd.it/xoa48pvq4r5c1.jpg?width=640&crop=smart&auto=webp&s=dc8622db75daafa4390190ff93f5ab55ee9b4e9f" alt="Quiz meme" data-caption="Questions">
+            <img src="https://media1.tenor.com/m/yqyHqTYHnBkAAAAC/thumbs-up-90s.gif" alt="Yes Thumbs up nice gif" data-caption="Trump Thumbs up">
+            <img src="https://media1.tenor.com/m/V2MJz1JD36UAAAAd/sad-cry.gif" alt="Sad Cry gif" data-caption="Sad Cry">
+            <img src="https://media1.tenor.com/m/EPOE3YQDdbEAAAAC/will-farrell-wedding-crashers.gif" alt="Will Farrell happy  gif" data-caption="Will Farrell">
+            <img src="https://media1.tenor.com/m/twlE81mz2uYAAAAC/stare-awkward.gif" alt="Stare Awkward gif" data-caption="Stare Awkward">
+            <img src="https://i.redd.it/v7u8272svp8c1.png" alt="computer redownload pc meme" data-caption="Everything comes at a cost">
+            <img src="https://media1.tenor.com/m/55em64iqU48AAAAd/jose-mourinho-i-am-jose-mourinho.gif" alt="i Am Jose Mourinho  gif" data-caption="I Am Jose Mourinho">
+            <img src="https://media1.tenor.com/m/emB8geA7MT0AAAAC/yes-yay.gif" alt="Yes nba Shaquille O'Neal happy  gif" data-caption="Yes!!">
+            <img src="https://preview.redd.it/higx5ybmji5c1.jpg?width=640&crop=smart&auto=webp&s=69096a2a62c1a65964da8641fc6b9fe0d8cdea5f" alt="BFFs meme" data-caption="Instantly BFFs">
+            <img src="https://media1.tenor.com/m/B6cIz4eIEgQAAAAd/microsoft-word.gif" alt="Microsoft Word why transformers gif" data-caption="Why Microsoft..">
+            <img src="https://media1.tenor.com/m/_4k-WI65FK4AAAAd/meme.gif" alt="Dooms slayer teacher bald gif" data-caption="Ops..">
+            <img src="https://media1.tenor.com/m/ps67m_SI04UAAAAC/mike-tyson-awkward-smile.gif" alt="Mike Tyson happy smile  gif" data-caption="Happy Mike Tyson">
+            <img src="https://media1.tenor.com/m/YebVIVDe700AAAAC/running-hiatus.gif" alt="Running crazy gif" data-caption="Running">
+            <img src="https://media1.tenor.com/m/Xv92ltSnupgAAAAd/gosling-sad-gosling.gif" alt="Sad Ryan Gosling gif" data-caption="Ryan Gosling sad">
+            <img src="https://media1.tenor.com/m/6bUnLYb54jgAAAAC/thank-you-thanks.gif" alt="Keanu gif" data-caption="Thank You">
+            <img src="https://preview.redd.it/584dtiu48m5c1.jpg?width=640&crop=smart&auto=webp&s=68db23941f53fcdc5596853551ab7dbbf56ba853" alt="winnie the pooh meme" data-caption="winnie the pooh">
+            <img src="https://preview.redd.it/n3f50v8fji5c1.jpg?width=640&crop=smart&auto=webp&s=3bd6e7e0500d2038ff2b5011cd8a56cf110049eb" alt="Hulk meme" data-caption="W Grandma">
+            <img src="https://media1.tenor.com/m/HUDIU5GEuFwAAAAC/jose-mourinho-funky.gif" alt="Jose Mourinho Dancing dance party gif" data-caption="Jose Mourinho Dancing?">
+            <img src="https://preview.redd.it/rv7qja7t4q5c1.jpg?auto=webp&s=dee82b406c24e08044ea8c950ca58acf162519f8" alt="Important message meme" data-caption="Important message">
+            <img src="https://media1.tenor.com/m/jqb2woXW3JAAAAAd/meme-captain-america.gif" alt="Captain America peter parker gif" data-caption="Not my problem!">
+            <img src="https://media1.tenor.com/m/I3btKSBxue4AAAAC/yell-shout.gif" alt="happy Jonah Hill gif" data-caption="So happy">
+            <img src="https://media1.tenor.com/m/7r-BGEoIohkAAAAd/meme-cat.gif" alt="cat side eye  gif" data-caption="Cat side eye">
+            <img src="https://media1.tenor.com/m/NvVxnB_7ZnIAAAAd/tyler-durden.gif" alt="movie Fight Club Tyler Durden  gif" data-caption="Tyler Durden">
+            <img src="https://media1.tenor.com/m/amVF5hSwOuIAAAAd/mike-o%27hearn-real.gif" alt="Mike O'Hearn Real  gif" data-caption="Real">
+            <img src="https://media1.tenor.com/m/8R4b3UmZ9eUAAAAd/dj-khaled-dancing.gif" alt="Dj Khaled Dancing  dance gif" data-caption="Dj Khaled Dancing ">
+            <img src="https://preview.redd.it/oh02rx3kyb5c1.jpg?width=640&crop=smart&auto=webp&s=88ae2445ae1bc2d81f0f282076c1e5d22c770345" alt="Boomers eminem meme" data-caption="Boomers">
+            <img src="https://media1.tenor.com/m/cwoN93BINOMAAAAC/so-good-wink.gif" alt="Wink  gif" data-caption="Wink!">
+            <img src="https://preview.redd.it/anr72xu0xl5c1.jpg?width=640&crop=smart&auto=webp&s=92ef18cc0a26de1f77778aabb4c839fe65591884" alt="Why Doom slayer hell meme" data-caption="Why!!">
+            <img src="https://media1.tenor.com/m/GM2NnQyP96cAAAAC/the-office-crying.gif" alt="The Office Crying sad gif" data-caption="The Office Crying">
+            <img src="https://media1.tenor.com/m/Zn44t0HYm30AAAAC/ryan-gosling-laugh.gif" alt="Laugh  Lmao Ryan Gosling gif" data-caption="Ryan Gosling Laugh">
+            <img src="https://media1.tenor.com/m/U9Q6lSEgWtkAAAAC/umm-um.gif" alt="Side eye gif" data-caption="Side eye">
+            <img src="https://media1.tenor.com/m/RP_qoKH85xgAAAAd/the-rock-sus-the-rock-meme.gif" alt="Sus The Rock glasses gif" data-caption="Sus">
+            <img src="https://preview.redd.it/zzpdiblvsf4c1.jpg?width=640&crop=smart&auto=webp&s=597c3924aa72c38edbeaf0f4db40ef849b7b0975" alt="gta6  meme" data-caption="We have waited long enough!">
+            <img src="https://media1.tenor.com/m/Q3406JOSa5wAAAAC/angry-anger.gif" alt="Angry Anger mad gif" data-caption="Angry Anger">
+            <img src="https://media1.tenor.com/m/oxzGONK8Gb8AAAAd/thumb-up-thumb-up-eating.gif" alt="Thumb Up nice cool gif" data-caption="Thumb Up">
+            <img src="https://media1.tenor.com/m/rKEUw4Xh3xAAAAAC/byuntear-thousand-yard-stare.gif" alt="Thousand Yard Stare cat gif" data-caption="Bruh">
+            <img src="https://preview.redd.it/6ut3qovlru4c1.png?auto=webp&s=a37afceac272efeeae3dd7669b85593fa6a7a151" alt="Sleeping till afternoon Yiss meme" data-caption="Instantly BFFs">
+            <img src="https://media1.tenor.com/m/GSf4T-90WcwAAAAC/robert-downey-jr-facepalm.gif" alt="Facepalm Robert Downey Jr gif" data-caption="Robert Downey Jr Facepalm">
+            <img src="https://preview.redd.it/tpymyr7fgfb81.png?width=640&crop=smart&auto=webp&s=30317368bd766a2fa6efc7a4e5120a1066f8952f" alt="fun fact eminem meme" data-caption="Fun Fact">
+            <img src="https://media1.tenor.com/m/OXn4ngtA1w4AAAAd/ryan-gosling.gif" alt="Ryan Gosling thumbs up nice   gif" data-caption="Ryan Gosling thumbs up">
+            <img src="https://preview.redd.it/j81l2x1add4c1.jpg?width=640&crop=smart&auto=webp&s=bbc2495c1bee710d0c3ebc95cc0ba74e191f06c3" alt="gta6 meme" data-caption="Cmon">
+            <img src="https://media1.tenor.com/m/jH4mBluqeSoAAAAC/mike-tyson-predator.gif" alt="Mike Tyson Fight Fighting box boxing  gif" data-caption="Mike Tyson">
+            <img src="https://media1.tenor.com/m/qzQri7NoPwUAAAAC/elf-santa.gif" alt="Will Farrell Yep  gif" data-caption="Will Farrell">
+            <img src="https://preview.redd.it/j3ephz531my51.jpg?width=640&crop=smart&auto=webp&s=f46c89a6530c13f1f73f6cb4d4ef460673e355f8" alt="games monopoly uno among us russian meme" data-caption="Russian Roulette">
+            <img src="https://preview.redd.it/bgh3qtul8h831.jpg?width=640&crop=smart&auto=webp&s=f4862246e622e0dacc6b6d1900a0f96823863518" alt="trump Kim Jong Un korea america  meme" data-caption="Trump and Kim Jong Un">
+            <img src="https://media1.tenor.com/m/T3VBfgyiq98AAAAd/dead-inside-cat-sad.gif" alt="Cat Dead Inside Cat Sad gif" data-caption="Cat Dead Inside Cat Sad">
+            <img src="https://preview.redd.it/swieo8hecp8c1.png?width=640&crop=smart&auto=webp&s=2c0f9757dd7eebe90d247e683183945e8dee67d8" alt="history school class  meme" data-caption="History in School">
+            <img src="https://media1.tenor.com/m/cANr4Q8bQuAAAAAd/jim-carrey-oops.gif" alt="Jim Carrey maybe happy gif" data-caption="Jim Carrey">
+            <img src="https://media1.tenor.com/m/BRssy2k8Q8UAAAAd/the-rock-when-the-paper-walks-in-vince-mcmahon.gif" alt="The Rock When The Paper Walks In   gif" data-caption="The Rock When The Paper Walks In ">
+            <img src="https://media1.tenor.com/m/GBdIH5sL4XQAAAAC/the-rock-rock.gif" alt="Sus The Rock gif" data-caption="Sus!">
+            <img src="https://media1.tenor.com/m/GTE9_j1-xGIAAAAC/why.gif" alt="The Office Crying mad sad gif" data-caption="Why ">
+            <img src="https://media1.tenor.com/m/82rnavox7E4AAAAd/vince-mcmahon-sad.gif" alt="Vince Mcmahon Sad gif" data-caption="Vince Mcmahon Sad">
+            <img src="https://media1.tenor.com/m/6YtKuXjJDuoAAAAd/meme-facts.gif" alt="Very Interesting batman online class gif" data-caption="Very Interesting ">
+            <img src="https://media1.tenor.com/m/2ryZld026hIAAAAd/viking-jump-viking-leap-off-cliff.gif" alt="Viking Jump Viking Leap Off Cliff gif" data-caption="Jumping Off Cliff">
+            <img src="https://media1.tenor.com/m/Oe8RH6AugQcAAAAC/fight-fighting.gif" alt="Fight Fighting  gif" data-caption="Fighting">
+            <img src="https://media1.tenor.com/m/fR5cx2Z1IvUAAAAC/dancing-happy.gif" alt="Trump Dancing dance gif" data-caption="Trump Dancing">
+            <img src="https://media1.tenor.com/m/U3wGcV7xIL0AAAAC/my-honest-reaction-meme-my-reaction-to-that-information-meme.gif" alt="My Honest Reaction gif" data-caption="My Honest Reaction">
+            <img src="https://media1.tenor.com/m/Azkco9iXdL0AAAAC/fight-club.gif" alt="movie Fight Club  gif" data-caption="Fight Club">
+            <img src="https://media1.tenor.com/m/sZNqJAM1ANUAAAAC/the-rock.gif" alt="The Rock  edit bald   gif" data-caption="The Pedra">
+            <img src="https://media1.tenor.com/m/zWGENVxuAIMAAAAd/company-wifi.gif" alt="Company Wifi peter parker job boss gif" data-caption="Company Wifi">
+            <img src="https://media1.tenor.com/m/8JXpDNFr4WoAAAAd/meme-spiderman.gif" alt="Spiderman exam school class escola aula gif" data-caption="Spiderman">
+
+
+            <!-- Adicione mais imagens conforme necessário -->
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <img class="modal-img" id="modalImg">
+                <p class="modal-caption" id="caption">Texto de exemplo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão para voltar ao topo ....-->
+    <div id="backToTop" onclick="scrollToTop()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </div>
+</div>
+
+<!-- Rodapé -->
+<footer>
+    <p>QuickMeme - Bruno Oliveira</p>
+</footer>
+
+
+
+
+
+<script>
+    // Lógica de pesquisa, filtragem e modal...
+
+    // Função para rolar para o topo da página
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+
+
+    <script>
+        // Lógica de pesquisa
+        const searchInput = document.getElementById('searchInput');
+        const memesBtn = document.getElementById('memesBtn');
+        const gifsBtn = document.getElementById('gifsBtn');
+        const titleBtn = document.getElementById('titleBtn');
+        const imageGallery = document.getElementById('imageGallery');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const images = imageGallery.getElementsByTagName('img');
+            
+            for (const image of images) {
+                const altText = image.getAttribute('alt').toLowerCase();
+                if (altText.includes(searchTerm)) {
+                    image.style.display = 'block';
+                } else {
+                    image.style.display = 'none';
+                }
+            }
+        });
+
+        // Lógica de filtragem por botões MEMES e GIFS
+        memesBtn.addEventListener('click', function() {
+            filterImagesByCategory('meme');
+        });
+
+        gifsBtn.addEventListener('click', function() {
+            filterImagesByCategory('gif');
+        });
+
+        // Adicione um evento de clique ao título para resetar a página
+        titleBtn.addEventListener('click', function() {
+            location.reload();
+        });
+
+        function filterImagesByCategory(category) {
+            const images = imageGallery.getElementsByTagName('img');
+
+            for (const image of images) {
+                const altText = image.getAttribute('alt').toLowerCase();
+                const isCategoryMatch = altText.includes(category);
+                if (isCategoryMatch) {
+                    image.style.display = 'block';
+                } else {
+                    image.style.display = 'none';
+                }
+            }
+        }
+
+        // Lógica do modal
+        const modal = document.getElementById('myModal');
+        const modalImg = document.getElementById('modalImg');
+        const captionText = document.getElementById('caption');
+
+        const images = document.querySelectorAll('.gallery img');
+        images.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                modalImg.src = this.src;
+                captionText.textContent = this.getAttribute('data-caption');
+            });
+        });
+
+        modal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
